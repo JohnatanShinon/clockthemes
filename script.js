@@ -23,6 +23,9 @@ function toggleTheme() {
 
     // Salva a preferência do usuário no localStorage
     localStorage.setItem('userThemePreference', isDarkTheme ? 'dark' : 'light');
+
+    // Define a cor da bolinha do toggle switch
+    updateToggleColor();
 }
 
 // Função para aplicar o tema com base no horário (se não houver preferência salva)
@@ -43,13 +46,30 @@ function applyThemeBasedOnTime() {
             document.body.classList.add('dark-theme'); // Tema escuro
         }
     }
+
+    // Atualiza a cor da bolinha do toggle switch
+    updateToggleColor();
 }
 
-// Função para resetar a preferência do usuário
-function resetThemePreference() {
-    localStorage.removeItem('userThemePreference'); // Remove a preferência salva
-    applyThemeBasedOnTime(); // Aplica o tema com base no horário atual
-    alert('Preferência de tema resetada! O sistema agora seguirá o horário.'); // Notifica o usuário
+// Função para atualizar a cor da bolinha do toggle switch
+function updateToggleColor() {
+    const currentHour = new Date().getHours();
+    const userThemePreference = localStorage.getItem('userThemePreference');
+
+    // Determina o tema esperado com base no horário atual
+    const expectedTheme = currentHour >= 6 && currentHour < 18 ? 'light' : 'dark';
+
+    // Seleciona o slider do toggle switch
+    const slider = document.querySelector('.theme-switch .slider');
+
+    // Define a cor da bolinha
+    if (userThemePreference && userThemePreference !== expectedTheme) {
+        // Se o tema salvo for diferente do esperado, a bolinha fica vermelha
+        slider.style.backgroundColor = '#ff0000';
+    } else {
+        // Caso contrário, a bolinha volta ao branco
+        slider.style.backgroundColor = '#ffffff';
+    }
 }
 
 // Espera o DOM ser carregado antes de executar o script
@@ -62,29 +82,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Adiciona evento de mudança ao toggle switch para alternar o tema
     document.querySelector('.theme-switch input').addEventListener('change', toggleTheme);
-
-    // Cria o botão de reset
-    const resetButton = document.createElement('button');
-    resetButton.textContent = '🔄 Reset'; // Define o texto com um ícone de reciclagem
-    resetButton.title = 'Resetar Preferência de Tema'; // Adiciona um tooltip explicativo
-    resetButton.style.marginTop = '15px';
-    resetButton.style.marginLeft = '20px';
-    resetButton.style.padding = '10px 20px'; // Ajuste o padding para melhor visualização
-    resetButton.style.backgroundColor = '#e74c3c'; // Cor de fundo vermelha
-    resetButton.style.color = 'white'; // Cor do texto branca
-    resetButton.style.border = 'none'; // Sem borda
-    resetButton.style.borderRadius = '6px'; // Borda arredondada
-    resetButton.style.cursor = 'pointer'; // Cursor de clique
-    resetButton.style.fontSize = '16px'; // Tamanho da fonte
-    resetButton.style.display = 'flex'; // Melhora a centralização do ícone e texto
-    resetButton.style.alignItems = 'center'; // Centraliza verticalmente
-    resetButton.style.gap = '5px'; // Espaçamento entre o ícone e o texto
-
-    // Adiciona o evento de clique ao botão
-    resetButton.addEventListener('click', resetThemePreference);
-
-    // Adiciona o botão ao container
-    document.querySelector('.container').appendChild(resetButton);
 
     // Aplica o tema correto ao carregar a página
     applyThemeBasedOnTime();
