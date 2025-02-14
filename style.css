@@ -31,12 +31,14 @@ body {
     line-height: 1; /* Alinha o texto verticalmente */
 }
 
+/* Data */
 .date {
     font-size: 24px;
     color: #020202; /* Cor do texto no tema claro */
     margin: 10px 0;
 }
 
+/* Informações adicionais */
 .info {
     font-size: 16px;
     color: #020202; /* Cor do texto no tema claro */
@@ -94,7 +96,7 @@ body.dark-theme .info {
     width: 26px; /* Largura do botão */
     left: 4px; /* Posição inicial */
     bottom: 4px; /* Alinhamento vertical */
-    background-color: white; /* Cor do botão */
+    background-color: white; /* Cor padrão da bolinha */
     transition: 0.4s; /* Transição suave */
     border-radius: 50%; /* Botão circular */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra do botão */
@@ -107,4 +109,28 @@ input:checked + .slider {
 
 input:checked + .slider:before {
     transform: translateX(26px); /* Move o botão para a direita */
+}
+
+/* Tema Escuro para o Toggle Switch */
+body.dark-theme .slider {
+    background-color: #707070; /* Cor de fundo no tema escuro */
+}
+
+body.dark-theme .slider:before {
+    background-color: white; /* Cor da bolinha no tema escuro */
+}
+
+/* Centralização dos Elementos */
+.container {
+    text-align: center; /* Centraliza horizontalmente */
+}
+
+/* Espaçamento entre os elementos */
+.info {
+    margin-bottom: 20px; /* Espaçamento abaixo das informações */
+}
+
+.theme-switch {
+    margin: 0 auto; /* Centraliza o toggle switch */
+    display: block; /* Exibe como bloco */
 }
