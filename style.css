@@ -58,3 +58,53 @@ body.dark-theme .date,
 body.dark-theme .info {
     color: #ffffff; /* Cor do texto no tema escuro */
 }
+
+/* Theme Switch Styling */
+.theme-switch {
+    display: inline-block;
+    position: relative;
+    width: 60px; /* Largura do toggle */
+    height: 34px; /* Altura do toggle */
+    margin-top: 20px; /* Espaçamento superior */
+}
+
+.theme-switch input {
+    opacity: 0; /* Oculta o checkbox padrão */
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc; /* Cor de fundo padrão */
+    transition: 0.4s; /* Transição suave */
+    border-radius: 34px; /* Borda arredondada */
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra interna e externa */
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px; /* Altura do botão */
+    width: 26px; /* Largura do botão */
+    left: 4px; /* Posição inicial */
+    bottom: 4px; /* Alinhamento vertical */
+    background-color: white; /* Cor do botão */
+    transition: 0.4s; /* Transição suave */
+    border-radius: 50%; /* Botão circular */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra do botão */
+}
+
+/* Estado ativo (tema escuro) */
+input:checked + .slider {
+    background-color: #2196f3; /* Cor de fundo quando ativado */
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px); /* Move o botão para a direita */
+}
