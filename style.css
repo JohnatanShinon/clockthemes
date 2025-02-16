@@ -38,3 +38,21 @@ body.dark-theme {
         margin: 0 auto; /* Centraliza horizontalmente */
     }
 }
+
+/* Estilo do relógio */
+#clock {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+/* Estilo da data */
+#date {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+/* Estilo das informações adicionais */
+.info {
+    font-size: 0.9rem;
+    color: #888;
+}
