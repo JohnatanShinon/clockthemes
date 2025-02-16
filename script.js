@@ -34,12 +34,20 @@ function updateClockAndDate() {
     const clockElement = document.getElementById('clock');
     const dateElement = document.getElementById('date');
 
+    if (!clockElement || !dateElement) {
+        console.error("Elementos 'clock' ou 'date' não encontrados!");
+        return;
+    }
+
+    console.log("Atualizando relógio e data...");
     clockElement.textContent = formatTime(now); // Atualiza o relógio
     dateElement.textContent = formatDate(now); // Atualiza a data
 }
 
 // Inicialização
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("Página carregada. Iniciando script...");
+
     // Define o tema com base no horário ao carregar a página
     setThemeBasedOnTime();
 
