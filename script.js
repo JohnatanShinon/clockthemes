@@ -12,12 +12,14 @@ function setThemeBasedOnTime() {
     }
 }
 
-// Função para formatar a data no formato DD/MM/AAAA
+// Função para formatar a data no formato DD/MM/AAAA com o nome do dia da semana
 function formatDate(date) {
+    const daysOfWeek = ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"];
+    const dayName = daysOfWeek[date.getDay()];
     const day = String(date.getDate()).padStart(2, '0'); // Dia com dois dígitos
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Mês com dois dígitos (getMonth é base 0)
     const year = date.getFullYear(); // Ano completo
-    return `${day}/${month}/${year}`;
+    return `${dayName}, ${day}/${month}/${year}`;
 }
 
 // Função para formatar o horário no formato HH:MM:SS
@@ -39,24 +41,67 @@ function updateClockAndDate() {
         return;
     }
 
-    console.log("Atualizando relógio e data...");
     clockElement.textContent = formatTime(now); // Atualiza o relógio
     dateElement.textContent = formatDate(now); // Atualiza a data
+}
+
+// Função para detectar o fuso horário e localização
+function detectTimezoneAndLocation() {
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone; // Detecta o fuso horário
+    document.getElementById('timezone').textContent = timezone;
+
+    // Simula a localização (substitua por uma API real se necessário)
+    document.getElementById('location').textContent = "Brasil";
+}
+
+// Função para alternar o tema manualmente
+function toggleThemeManually() {
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('change', () => {
+        if (themeToggle.checked) {
+            document.body.classList.add('dark-theme');
+            document.body.classList.remove('light-theme');
+            localStorage.setItem('theme', 'dark'); // Salva a preferência no localStorage
+        } else {
+            document.body.classList.add('light-theme');
+            document.body.classList.remove('dark-theme');
+            localStorage.setItem('theme', 'light'); // Salva a preferência no localStorage
+        }
+    });
+}
+
+// Função para carregar a preferência de tema salva
+function loadSavedTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-theme');
+        document.body.classList.remove('light-theme');
+        document.getElementById('theme-toggle').checked = true;
+    } else if (savedTheme === 'light') {
+        document.body.classList.add('light-theme');
+        document.body.classList.remove('dark-theme');
+        document.getElementById('theme-toggle').checked = false;
+    } else {
+        setThemeBasedOnTime(); // Define o tema com base no horário se não houver preferência salva
+    }
 }
 
 // Inicialização
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Página carregada. Iniciando script...");
 
-    // Define o tema com base no horário ao carregar a página
-    setThemeBasedOnTime();
+    // Carrega a preferência de tema salva
+    loadSavedTheme();
 
-    // Atualiza o tema automaticamente a cada minuto (opcional)
-    setInterval(setThemeBasedOnTime, 60000); // 60000ms = 1 minuto
+    // Detecta o fuso horário e localização
+    detectTimezoneAndLocation();
 
     // Atualiza o relógio e a data imediatamente ao carregar a página
     updateClockAndDate();
 
     // Atualiza o relógio e a data a cada segundo
     setInterval(updateClockAndDate, 1000); // 1000ms = 1 segundo
+
+    // Configura o toggle switch para alternar o tema manualmente
+    toggleThemeManually();
 });
