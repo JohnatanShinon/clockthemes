@@ -12,6 +12,10 @@ body {
 
 .container {
     text-align: center;
+    max-width: 100%; /* Garante que o container não ultrapasse a largura da tela */
+    width: 80%; /* Largura padrão do container */
+    padding: 20px;
+    box-sizing: border-box; /* Inclui o padding na largura total */
 }
 
 /* Tema claro */
@@ -24,4 +28,13 @@ body.light-theme {
 body.dark-theme {
     background-color: #333333;
     color: #ffffff;
+}
+
+/* Media Query para modo retrato */
+@media (orientation: portrait) {
+    .container {
+        width: 80%; /* Ocupa 80% da largura em modo retrato */
+        max-width: 400px; /* Limita a largura máxima para telas menores */
+        margin: 0 auto; /* Centraliza horizontalmente */
+    }
 }
