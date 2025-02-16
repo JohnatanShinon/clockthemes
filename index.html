@@ -17,8 +17,13 @@
         <!-- Data -->
         <p id="date">Exemplo de Data</p>
         <!-- Informações adicionais -->
-        <p class="info">Fuso Horário: UTC-3</p>
-        <p class="info">Localização: Brasil</p>
+        <p class="info">Fuso Horário: <span id="timezone">Carregando...</span></p>
+        <p class="info">Localização: <span id="location">Carregando...</span></p>
+        <!-- Toggle Switch para alternar o tema -->
+        <label class="theme-switch">
+            <input type="checkbox" id="theme-toggle">
+            <span class="slider"></span>
+        </label>
     </div>
     <!-- Script principal -->
     <script src="script.js" defer></script>
