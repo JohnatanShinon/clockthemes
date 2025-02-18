@@ -31,3 +31,54 @@ document.addEventListener('DOMContentLoaded', function () {
     // Chama a função uma vez ao carregar a página para evitar atraso inicial
     updateClock();
 });
+
+// Função para obter o fuso horário
+function getTimezone() {
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone; // Obtém o fuso horário do navegador
+    document.getElementById('timezone').textContent = timezone || 'Desconhecido';
+}
+
+// Função para obter a localização (cidade/país)
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            function (position) {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+
+                // Usa uma API de geocodificação reversa para obter a cidade e o país
+                fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const location = data.address.city || data.address.town || data.address.village || 'Desconhecido';
+                        const country = data.address.country || 'Desconhecido';
+                        document.getElementById('location').textContent = `${location}, ${country}`;
+                    })
+                    .catch(error => {
+                        console.error('Erro ao obter localização:', error);
+                        document.getElementById('location').textContent = 'Desconhecido';
+                    });
+            },
+            function (error) {
+                console.error('Erro ao acessar geolocalização:', error.message);
+                document.getElementById('location').textContent = 'Desconhecido';
+            }
+        );
+    } else {
+        document.getElementById('location').textContent = 'Geolocalização não suportada';
+    }
+}
+
+// Espera o DOM ser carregado antes de executar o script
+document.addEventListener('DOMContentLoaded', function () {
+    // Atualiza o relógio a cada segundo
+    setInterval(updateClock, 1000);
+    // Chama a função uma vez ao carregar a página para evitar atraso inicial
+    updateClock();
+
+    // Obtém e exibe o fuso horário
+    getTimezone();
+
+    // Obtém e exibe a localização
+    getLocation();
+});
